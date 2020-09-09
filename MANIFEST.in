@@ -1,0 +1,3 @@
+graft VoiceSynth/static
+graft VoiceSynth/templates
+global-exclude *.pyc

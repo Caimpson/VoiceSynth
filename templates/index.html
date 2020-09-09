@@ -1,0 +1,360 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Voice Controlled Synth</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/request-command.js') }}"></script>
+	<meta charset="UTF-8">
+</head>
+<body onload="setup()">
+<button id="instructionsButton" onclick="showInstructions()">Instructions</button>
+
+<div class="titleHeading">
+	<h1>Voice Controlled Synth</h1>
+</div>
+
+<div class="container">
+    <div id="keyboard"></div>
+</div>
+
+<div class="headings">
+    <div id="oscHeading"><h2>Oscillators</h2></div>
+    <div id="mastHeading"><h2>Master Controls</h2></div>
+</div>
+
+<div class="oscillatorContainer">
+	<div class="oscillator" id="osc0">
+
+		<h3>Osc 1</h3>
+		<hr>
+		<button type="button" id="startOsc0" onclick="createVoice(0,this.id,'controlsContainer0')">On</button>
+		<div id="controlsContainer0">
+			<hr>
+			<br/>
+            <label for="osc0SliderLevel">Level</label>
+            <input type="range" min="0.0001" max="1.01" step="0.01" value="0.3" class="slider" id="osc0SliderLevel" oninput='changeLevel(0,"osc0Level",this.value)'>
+			<br/>
+			<span id="osc0Level">0.3</span>
+			<hr>
+			<br/>
+            <label for="freqButtonsDiv0">Pitch</label>
+			<div id="freqButtonsDiv0">
+                 <button type="button" id="osc0FreqButton-" onclick='changeFreq(0,"osc0Freq","-")'>
+					-ST
+                </button>
+                <button type="button" id="osc0FreqButton+" onclick='changeFreq(0,"osc0Freq","+")'>
+                    +ST
+                </button>
+                <br>
+                <span id="semitoneMod0">Semitone Modifier: 0</span>
+            </div>
+			<hr>
+			<br/>
+            <label for="waveSelect0">Waveform</label>
+            <select id="waveSelect0">
+				<option value="sine" onclick="changeWaveform(0, this.value)" selected>SINE</option>
+				<option value="square" onclick="changeWaveform(0,this.value)">SQUARE</option>
+				<option value="sawtooth" onclick="changeWaveform(0,this.value)">SAWTOOTH</option>
+				<option value="triangle" onclick="changeWaveform(0,this.value)">TRIANGLE</option>
+			</select>
+			<hr>
+			<hr>
+			<h3>Filter 1</h3>
+			<hr>
+			<button type="button" id="startFilter0" onclick="toggleFilter(0, 'startFilter0')">On</button>
+		</div>
+		
+		<div id="filterContainer0">
+			<hr>
+			<br/>
+            <label for="filterGainSlider0">Filter Gain</label>
+            <input type="range" min="-40.0" max="40.0" step="1" value="0.2" class="slider" id="filterGainSlider0" oninput='changeFilterGain(0,"filterGain0",this.value)'>
+			<br/>
+			<span id="filterGain0">0</span>
+			<hr>
+			<br/>
+            <label for="filterFreqSlider0">Filter Frequency</label>
+            <input type="range" min="20" max="20000" step="1" value="20" class="slider" id="filterFreqSlider0" oninput='changeFilterFreq(0,"filterFreq0",this.value)'>
+			<br/>
+			<span id="filterFreq0">20</span>
+			<hr>
+			<br/>
+            <label for="filterQSlider0">Q Value</label>
+            <input type="range" min="1" max="1000" step="1" value="1" class="slider" id="filterQSlider0" oninput='changeFilterQ(0,"filterQ0",this.value)'>
+			<br/>
+			<span id="filterQ0">1</span>
+			<hr>
+			<br/>
+            <label for="filterTypeSelect0">Filter Type</label>
+            <select id="filterTypeSelect0">
+				<option value="lowpass" onclick="changeFilterType(0, this.value)" selected>LOWPASS</option>
+				<option value="highpass" onclick="changeFilterType(0,this.value)">HIGHPASS</option>
+				<option value="bandpass" onclick="changeFilterType(0,this.value)">BANDPASS</option>
+				<option value="lowshelf" onclick="changeFilterType(0,this.value)">LOWSHELF</option>
+				<option value="highshelf" onclick="changeFilterType(0,this.value)">HIGHSHELF</option>
+				<option value="peaking" onclick="changeFilterType(0,this.value)">PEAKING</option>
+				<option value="notch" onclick="changeFilterType(0,this.value)">NOTCH</option>
+				<option value="allpass" onclick="changeFilterType(0,this.value)">ALLPASS</option>
+			</select>
+            <hr>
+		</div>
+	</div>
+
+
+
+	<div class="oscillator" id="osc1">
+		<h3>Osc 2</h3>
+		<hr>
+		<button type="button" id="startOsc1" onclick="createVoice(1,this.id,'controlsContainer1')">On</button>
+		<div id="controlsContainer1">
+			<hr>
+			<br/>
+            <label for="osc1SliderLevel">Level</label>
+            <input type="range" min="0.0001" max="1.01" step="0.01" value="0.2" class="slider" id="osc1SliderLevel" oninput='changeLevel(1,"osc1Level",this.value)'>
+			<br/>
+			<span id="osc1Level">0.3</span>
+			<hr>
+			<br/>
+            <label for="freqButtonsDiv1">Pitch</label>
+			<div id="freqButtonsDiv1">
+                 <button type="button" id="osc1FreqButton-" onclick='changeFreq(1,"osc1Freq","-")'>
+					-ST
+                </button>
+                <button type="button" id="osc1FreqButton+" onclick='changeFreq(1,"osc1Freq","+")'>
+                    +ST
+                </button>
+                <br>
+                <span id="semitoneMod1">Semitone Modifier: 0</span>
+            </div>
+			<hr>
+			<br/>
+            <label for="waveSelect1">Waveform</label>
+            <select id="waveSelect1">
+				<option value="sine" onclick="changeWaveform(1, this.value)" selected>SINE</option>
+				<option value="square" onclick="changeWaveform(1,this.value)">SQUARE</option>
+				<option value="sawtooth" onclick="changeWaveform(1,this.value)">SAWTOOTH</option>
+				<option value="triangle" onclick="changeWaveform(1,this.value)">TRIANGLE</option>
+			</select>
+			<hr>
+			<hr>
+			<h3>Filter 2</h3>
+			<hr>
+			<button type="button" id="startFilter1" onclick="toggleFilter(1, 'startFilter1', 'filterContainer1')">On</button>
+		</div>
+		
+		<div id="filterContainer1">
+			<hr>
+			<br/>
+            <label for="filterGainSlider1">Filter Gain</label>
+            <input type="range" min="-40.0" max="40.0" step="5" value="0.0" class="slider" id="filterGainSlider1" oninput='changeFilterGain(1,"filterGain1",this.value)'>
+			<br/>
+			<span id="filterGain1">0</span>
+			<hr>
+			<br/>
+            <label for="filterFreqSlider1">Filter Frequency</label>
+            <input type="range" min="20" max="5000" step="10" value="20" class="slider" id="filterFreqSlider1" oninput='changeFilterFreq(1,"filterFreq1",this.value)'>
+			<br/>
+			<span id="filterFreq1">20</span>
+			<hr>
+			<br/>
+            <label for="filterQSlider1">Q Value</label>
+            <input type="range" min="1" max="100" step="1" value="1" class="slider" id="filterQSlider1" oninput='changeFilterQ(1,"filterQ1",this.value)'>
+			<br/>
+			<span id="filterQ1">1</span>
+			<hr>
+			<br/>
+            <label for="filterTypeSelect1">Filter Type</label>
+            <select id="filterTypeSelect1">
+				<option value="lowpass" onclick="changeFilterType(1, this.value)" selected>LOWPASS</option>
+				<option value="highpass" onclick="changeFilterType(1,this.value)">HIGHPASS</option>
+				<option value="bandpass" onclick="changeFilterType(1,this.value)">BANDPASS</option>
+				<option value="lowshelf" onclick="changeFilterType(1,this.value)">LOWSHELF</option>
+				<option value="highshelf" onclick="changeFilterType(1,this.value)">HIGHSHELF</option>
+				<option value="peaking" onclick="changeFilterType(1,this.value)">PEAKING</option>
+				<option value="notch" onclick="changeFilterType(1,this.value)">NOTCH</option>
+				<option value="allpass" onclick="changeFilterType(1,this.value)">ALLPASS</option>
+			</select>
+            <hr>
+		</div>
+	</div>
+
+
+	<div class="oscillator" id="osc2">
+		<h3>Osc 3</h3>
+		<hr>
+		<button type="button" id="startOsc2" onclick="createVoice(2,this.id,'controlsContainer2')">On</button>
+		<div id="controlsContainer2">
+			<hr>
+			<br/>
+            <label for="osc2SliderLevel">Level</label>
+            <input type="range" min="0.0001" max="1.01" step="0.01" value="0.2" class="slider" id="osc2SliderLevel" oninput='changeLevel(2,"osc2Level",this.value)'>
+			<br/>
+			<span id="osc2Level">0.3</span>
+			<hr>
+			<br/>
+            <label for="freqButtonsDiv2">Pitch</label>
+			<div id="freqButtonsDiv2">
+                 <button type="button" id="osc2FreqButton-" onclick='changeFreq(2,"osc2Freq","-")'>
+					-ST
+                </button>
+                <button type="button" id="osc2FreqButton+" onclick='changeFreq(2,"osc2Freq","+")'>
+                    +ST
+                </button>
+                <br>
+                <span id="semitoneMod2">Semitone Modifier: 0</span>
+            </div>
+			<hr>
+			<br/>
+            <label for="waveSelect2">Waveform</label>
+            <select id="waveSelect2">
+				<option value="sine" onclick="changeWaveform(2, this.value)" selected>SINE</option>
+				<option value="square" onclick="changeWaveform(2,this.value)">SQUARE</option>
+				<option value="sawtooth" onclick="changeWaveform(2,this.value)">SAWTOOTH</option>
+				<option value="triangle" onclick="changeWaveform(2,this.value)">TRIANGLE</option>
+			</select>
+			<hr>
+			<hr>
+			<h3>Filter 3</h3>
+			<hr>
+			<button type="button" id="startFilter2" onclick="toggleFilter(2, 'startFilter2', 'filterContainer2')">On</button>
+		</div>
+		
+		<div id="filterContainer2">
+			<hr>
+			<br/>
+            <label for="filterGainSlider2">Filter Gain</label>
+            <input type="range" min="-40.0" max="40.0" step="1" value="0.0" class="slider" id="filterGainSlider2" oninput='changeFilterGain(2,"filterGain2",this.value)'>
+			<br/>
+			<span id="filterGain2">0</span>
+			<hr>
+			<br/>
+            <label for="filterFreqSlider2">Filter Frequency</label>
+            <input type="range" min="20" max="20000" step="1" value="20" class="slider" id="filterFreqSlider2" oninput='changeFilterFreq(2,"filterFreq2",this.value)'>
+			<br/>
+			<span id="filterFreq2">20</span>
+			<hr>
+			<br/>
+            <label for="filterQSlider2">Q Value</label>
+            <input type="range" min="1" max="1000" step="1" value="1" class="slider" id="filterQSlider2" oninput='changeFilterQ(2,"filterQ2",this.value)'>
+			<br/>
+			<span id="filterQ2">1</span>
+			<hr>
+			<br/>
+            <label for="filterTypeSelect2">Filter Type</label>
+            <select id="filterTypeSelect2">
+				<option value="lowpass" onclick="changeFilterType(2, this.value)" selected>LOWPASS</option>
+				<option value="highpass" onclick="changeFilterType(2,this.value)">HIGHPASS</option>
+				<option value="bandpass" onclick="changeFilterType(2,this.value)">BANDPASS</option>
+				<option value="lowshelf" onclick="changeFilterType(2,this.value)">LOWSHELF</option>
+				<option value="highshelf" onclick="changeFilterType(2,this.value)">HIGHSHELF</option>
+				<option value="peaking" onclick="changeFilterType(2,this.value)">PEAKING</option>
+				<option value="notch" onclick="changeFilterType(2,this.value)">NOTCH</option>
+				<option value="allpass" onclick="changeFilterType(2,this.value)">ALLPASS</option>
+			</select>
+            <hr>
+		</div>
+	</div>
+
+
+	<div class="oscillator" id="osc3">
+		<h3>Osc 4</h3>
+		<hr>
+		<button type="button" id="startOsc3" onclick="createVoice(3,this.id,'controlsContainer3')">On</button>
+		<div id="controlsContainer3">
+			<hr>
+			<br/>
+            <label for="osc3SliderLevel">Level</label>
+            <input type="range" min="0.0001" max="1.01" step="0.01" value="0.2" class="slider" id="osc3SliderLevel" oninput='changeLevel(3,"osc3Level",this.value)'>
+			<br/>
+			<span id="osc3Level">0.3</span>
+			<hr>
+			<br/>
+			 <label for="freqButtonsDiv3">Pitch</label>
+			<div id="freqButtonsDiv3">
+                 <button type="button" id="osc3FreqButton-" onclick='changeFreq(3,"osc3Freq","-")'>
+					-ST
+                </button>
+                <button type="button" id="osc3FreqButton+" onclick='changeFreq(3,"osc3Freq","+")'>
+                    +ST
+                </button>
+                <br>
+                <span id="semitoneMod3">Semitone Modifier: 0</span>
+            </div>
+			<hr>
+			<br/>
+            <label for="waveSelect3">Waveform</label>
+            <select id="waveSelect3">
+				<option value="sine" onclick="changeWaveform(3, this.value)" selected>SINE</option>
+				<option value="square" onclick="changeWaveform(3,this.value)">SQUARE</option>
+				<option value="sawtooth" onclick="changeWaveform(3,this.value)">SAWTOOTH</option>
+				<option value="triangle" onclick="changeWaveform(3,this.value)">TRIANGLE</option>
+			</select>
+			<hr>
+			<hr>
+			<h3>Filter 4</h3>
+			<hr>
+			<button type="button" id="startFilter3" onclick="toggleFilter(3, 'startFilter3', 'filterContainer3')">On</button>
+		</div>
+		
+		<div id="filterContainer3">
+			<hr>
+			<br/>
+            <label for="filterGainSlider3">Filter Gain</label>
+            <input type="range" min="-40.0" max="40.0" step="1" value="0.0" class="slider" id="filterGainSlider3" oninput='changeFilterGain(3,"filterGain3",this.value)'>
+			<br/>
+			<span id="filterGain3">0</span>
+			<hr>
+			<br/>
+            <label for="filterFreqSlider3">Filter Frequency</label>
+            <input type="range" min="20" max="20000" step="1" value="20" class="slider" id="filterFreqSlider3" oninput='changeFilterFreq(3,"filterFreq3",this.value)'>
+			<br/>
+			<span id="filterFreq3">20</span>
+			<hr>
+			<br/>
+            <label for="filterQSlider3">Q Value</label>
+            <input type="range" min="1" max="100" step="1" value="1" class="slider" id="filterQSlider3" oninput='changeFilterQ(3,"filterQ3",this.value)'>
+			<br/>
+			<span id="filterQ3">1</span>
+			<hr>
+			<br/>
+            <label for="filterTypeSelect3">Filter Type</label>
+            <select id="filterTypeSelect3">
+				<option value="lowpass" onclick="changeFilterType(3, this.value)" selected>LOWPASS</option>
+				<option value="highpass" onclick="changeFilterType(3,this.value)">HIGHPASS</option>
+				<option value="bandpass" onclick="changeFilterType(3,this.value)">BANDPASS</option>
+				<option value="lowshelf" onclick="changeFilterType(3,this.value)">LOWSHELF</option>
+				<option value="highshelf" onclick="changeFilterType(3,this.value)">HIGHSHELF</option>
+				<option value="peaking" onclick="changeFilterType(3,this.value)">PEAKING</option>
+				<option value="notch" onclick="changeFilterType(3,this.value)">NOTCH</option>
+				<option value="allpass" onclick="changeFilterType(3,this.value)">ALLPASS</option>
+			</select>
+            <hr>
+		</div>
+	</div>
+</div>
+
+<div class="masterControlsContainer">
+	<div class="masterControls">
+        <div>
+            <hr>
+            <button id="resetButton" onclick="resetAll()">Reset</button>
+        </div>
+	</div>
+    <div>
+        <hr>
+        <h3>Speech Input</h3>
+        <button id="speechInputButton"><i id="micIcon" class="fa fa-microphone"></i></button>
+        <label for="speechOutputAsText"></label>
+        <textarea id="speechOutputAsText"></textarea>
+        <hr>
+    </div>
+</div>
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/qwerty-hancock.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/synth.js') }}"></script>
+
+</body>
+</html>

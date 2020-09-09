@@ -1,0 +1,29 @@
+Installation Instructions
+
+- Requires Python 3.7
+
+Windows:
+	- open setup.py in a text editor
+	- for 64-bit: 
+		- in the installation_requires section uncomment "PyAudio-0.2.11-cp37-cp37m-win_amd64.whl",
+	- for 32-bit:
+		- in the installation_requires section uncomment "PyAudio-0.2.11-cp37-cp37m-win32.whl",
+	- save the file and close
+	- open command prompt and cd into the root directory where setup.py is located
+	- Enter the command: python setup.py install
+		- If this step causes an error try to install PyAudio sepatately with the command: 
+			pip install PyAudio-0.2.11-cp37-cp37m-win_amd64.whl
+			- or -
+			pip install PyAudio-0.2.11-cp37-cp37m-win32.whl
+	- To run the server enter the command: python -m flask run
+	- open a web browser and navigate to http://127.0.0.1:5000
+
+OS X:
+	- open setup.py in a text editor
+	- in the installation_requires section uncomment "PyAudio==0.2.11", 
+	- save the file and close
+	- open terminal and cd into the root directory where setup.py is located
+	- Enter the command: python setup.py install
+	- To run the server enter the command: python -m flask run
+	- open a web browser and navigate to http://127.0.0.1:5000
+ 
